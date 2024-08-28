@@ -54,6 +54,10 @@ function getRunetrinketGuaranteedRate() {
 }
 
 function makeStringForDisplay() {
+    if (game.global.universe == 1) {
+        return '';
+    }
+    
     const runetrinketstring = getRunetrinketCountFromGame() + "<br\>/ " + getRunetrinketMaxFromGame();
     return runetrinketstring
 }
