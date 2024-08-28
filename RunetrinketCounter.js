@@ -21,7 +21,7 @@ if (game.portal.Observation.radLocked == false) {
     populateRunetrinketCounterInfo();
     setInterval( function () {
         populateRunetrinketCounterInfo();
-    }, 10000);
+    }, 1000);
 }
 
 
