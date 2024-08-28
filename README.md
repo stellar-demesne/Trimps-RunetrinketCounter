@@ -7,9 +7,9 @@ Intended use is merely to have installed GodNooNoo's [ModLoader](https://github.
 However, manual installation should be possible through one of the following paths:
 
 ### Browser
-Create a new Tampermonkey script with the contents of [this repository's .user.js file](https://github.com/stellar-demesne/Trimps-RunetrinketCounter/RunetrinketCounter.user.js).
+Create a new Tampermonkey script with the contents of this repository's `RunetrinketCounter.user.js` file.
 
 ### Steam
-Download [this repository's mods.js file](https://github.com/stellar-demesne/Trimps-RunetrinketCounter/mods.js), and place it in the /mods/ folder inside the Trimps folder.
+Download this repository's `mods.js` file, and place it in the /mods/ folder inside the Trimps folder.
 
 More in-depth instructions can be found at the ModLoader's page, if you need them.
