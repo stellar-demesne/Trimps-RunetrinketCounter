@@ -67,7 +67,7 @@ function populateRunetrinketCounterTooltip() {
     tooltipstring = "tooltip('Runetrinket Summary', 'customText', event, '";
     tooltipstring += `<p>Runetrinkets give 1% per runetrinket per perk level, for a current boost of <b>` + getRunetrinketEffect() + `%</b>.</p>`;
 
-    tooltipstring += game.portal.Observation.getChanceText();
+    tooltipstring += `<p>` + game.portal.Observation.getChanceText();
     tooltipstring += ` Also, you are getting a guaranteed <b>` + getRunetrinketGuaranteedRate() + `</b> every 25 zones past z100.</p>`;
     tooltipstring += "')"
     return tooltipstring
