@@ -7,7 +7,7 @@ if (document.getElementById('RunetrinketCounter') === null) {
     // TODO: add other colours which look decent for the other options
     chosen_colours = darkmode_colours;
     // TODO: add detection for when to apply other colours
-    containerRunetrinketCounter.setAttribute('style', 'display: block; float: right; width: 30%; font-size: 0.7em; text-align: center;' + chosen_colours);
+    containerRunetrinketCounter.setAttribute('style', 'display: block; position: absolute; top: 0; right: 0; width: 30%; font-size: 0.7em; text-align: center;' + chosen_colours);
     const textareaRunetrinketCounter = document.createElement('SPAN');
     containerRunetrinketCounter.setAttribute('onmouseover', populateRunetrinketCounterTooltip(true));
     containerRunetrinketCounter.setAttribute('onmouseout', 'tooltip("hide")');
