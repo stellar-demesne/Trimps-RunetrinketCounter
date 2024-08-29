@@ -3,10 +3,13 @@
 if (document.getElementById('RunetrinketCounter') === null) {
     const containerRunetrinketCounter = document.createElement('DIV');
   
-    let darkmode_colours = ' color: rgb(0,0,0); background-color: rgb(93,93,93);'
-    // TODO: add other colours which look decent for the other options
-    chosen_colours = darkmode_colours;
-    // TODO: add detection for when to apply other colours
+    let standard_colours = ' color: rgb(0,0,0); background-color: rgb(255,255,255);';
+    let darkmode_colours = ' color: rgb(0,0,0); background-color: rgb(93,93,93);';
+    
+    let chosen_colours = standard_colours;
+    if (game.options.menu.darkTheme.enabled == 2) {
+        chosen_colours = darkmode_colours;
+    }
     containerRunetrinketCounter.setAttribute('style', 'display: block; position: absolute; top: 0; right: 0; width: 30%; font-size: 0.7em; text-align: center;' + chosen_colours);
     const textareaRunetrinketCounter = document.createElement('SPAN');
     containerRunetrinketCounter.setAttribute('onmouseover', populateRunetrinketCounterTooltip(true));
