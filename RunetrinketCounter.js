@@ -11,8 +11,9 @@ if (document.getElementById('RunetrinketCounter') === null) {
         chosen_colours = darkmode_colours;
     }
     containerRunetrinketCounter.setAttribute('style', 'display: block; position: absolute; top: 0; right: 0; width: 30%; font-size: 0.7em; text-align: center;' + chosen_colours);
+    containerRunetrinketCounter.setAttribute('class', 'noselect');
     const textareaRunetrinketCounter = document.createElement('SPAN');
-    containerRunetrinketCounter.setAttribute('onmouseover', populateRunetrinketCounterTooltip(true));
+    containerRunetrinketCounter.setAttribute('onmouseover', RTC_populateRunetrinketCounterTooltip(true));
     containerRunetrinketCounter.setAttribute('onmouseout', 'tooltip("hide")');
     textareaRunetrinketCounter.id = 'RunetrinketCounter';
     containerRunetrinketCounter.appendChild(textareaRunetrinketCounter);
@@ -21,18 +22,18 @@ if (document.getElementById('RunetrinketCounter') === null) {
 }
 
 if (game.portal.Observation.radLocked == false) {
-    populateRunetrinketCounterInfo();
+    RTC_populateRunetrinketCounterInfo();
     setInterval( function () {
-        populateRunetrinketCounterInfo();
+        RTC_populateRunetrinketCounterInfo();
     }, 1000);
 }
 
 
-function getRunetrinketCountFromGame() {
+function RTC_getRunetrinketCountFromGame() {
     return game.portal.Observation.trinkets;
 }
 
-function getRunetrinketMaxFromGame() {
+function RTC_getRunetrinketMaxFromGame() {
     let trinkets_max = (game.portal.Observation.radLevel + 1) * game.portal.Observation.trinketsPerLevel;
     if (game.global.u2MutationData !== { } && game.global.u2MutationData.Runed) {
         trinkets_max = trinkets_max * 1.5;
@@ -40,9 +41,9 @@ function getRunetrinketMaxFromGame() {
     return trinkets_max;
 }
 
-function getRunetrinketEffect() {
-    let trinkets = getRunetrinketCountFromGame()
-    let trinkmax = getRunetrinketMaxFromGame()
+function RTC_getRunetrinketEffect() {
+    let trinkets = RTC_getRunetrinketCountFromGame()
+    let trinkmax = RTC_getRunetrinketMaxFromGame()
     if (trinkmax < trinkets) trinkets = trinkmax;
 
     const effectiveness_per = game.portal.Observation.radLevel + 1;
@@ -50,43 +51,45 @@ function getRunetrinketEffect() {
     return prettify(effectiveness);
 }
 
-function getRunetrinketGuaranteedRate() {
+function RTC_getRunetrinketGuaranteedRate() {
     let perklevels = game.portal.Observation.radLevel;
     let halved = Math.floor(perklevels / 2)
     return prettify(halved);
 }
 
-function makeStringForDisplay() {
+function RTC_makeStringForDisplay() {
     if (game.global.universe == 1) {
         return '';
     }
     
-    const runetrinketstring = getRunetrinketCountFromGame() + "<br\>/ " + getRunetrinketMaxFromGame();
+    const runetrinketstring = RTC_getRunetrinketCountFromGame() + "<br\>/ " + RTC_getRunetrinketMaxFromGame();
     return runetrinketstring
 }
 
-function populateRunetrinketCounterTooltip() {
+function RTC_populateRunetrinketCounterTooltip() {
     if (usingRealTimeOffline == true) {
       return '';
     }
   
     let tooltipstring = '';
     tooltipstring = "tooltip('Runetrinket Summary', 'customText', event, '";
-    tooltipstring += `<p>Runetrinkets give 1% per runetrinket per perk level, for a current boost of <b>` + getRunetrinketEffect() + `%</b>.</p>`;
+    tooltipstring += `<p>Runetrinkets give 1% per runetrinket per perk level, for a current boost of `;
+    tooltipstring += prettify(RTC_getRunetrinketCountFromGame()) + ` &times; ` + (game.portal.Observation.radLevel + 1);
+    tooltipstring += ` = ` + `<b>+` + RTC_getRunetrinketEffect() + `%</b>.</p>`;
 
     tooltipstring += `<p>` + game.portal.Observation.getChanceText();
-    tooltipstring += ` Also, you are getting a guaranteed <b>` + getRunetrinketGuaranteedRate() + `</b> every 25 zones past z100.</p>`;
+    tooltipstring += ` Also, you are getting a guaranteed <b>` + RTC_getRunetrinketGuaranteedRate() + `</b> every 25 zones past z100.</p>`;
     tooltipstring += "')"
     return tooltipstring
 }
 
-function populateRunetrinketCounterInfo() {
+function RTC_populateRunetrinketCounterInfo() {
     if (usingRealTimeOffline == true) {
       return '';
     }
   
     const target_element = document.getElementById('RunetrinketCounter');
-    const the_information = makeStringForDisplay();
+    const the_information = RTC_makeStringForDisplay();
     target_element.innerHTML = the_information;
-    target_element.parentNode.setAttribute('onmouseover', populateRunetrinketCounterTooltip());
+    target_element.parentNode.setAttribute('onmouseover', RTC_populateRunetrinketCounterTooltip());
 }
