@@ -65,7 +65,7 @@ function RTC_makeStringForDisplay() {
 		return '';
 	}
 
-	const runeTrinketString = `${runeTrinkets}<span style="display: block; border-bottom: 1px solid black; margin: 5px;"></span>${runeTrinketsMax}`;
+	const runeTrinketString = `${runeTrinkets}<span style="display: block; border-bottom: 1px solid black; margin: 3px 20%;"></span>${runeTrinketsMax}`;
 	return runeTrinketString;
 }
 
@@ -95,5 +95,5 @@ function RTC_populateRunetrinketCounterInfo() {
 	const the_information = RTC_makeStringForDisplay();
 
 	if (target_element.innerHTML !== the_information) target_element.innerHTML = the_information;
-	if (the_information !== '') target_element.parentNode.setAttribute('onmouseover', RTC_populateRunetrinketCounterTooltip());
+	if (the_information !== '') target_element.setAttribute('onmouseover', RTC_populateRunetrinketCounterTooltip());
 }
