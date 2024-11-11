@@ -2,22 +2,19 @@
 
 if (document.getElementById('RunetrinketCounter') === null) {
     const containerRunetrinketCounter = document.createElement('DIV');
-  
-    let standard_colours = ' color: rgb(0,0,0); background-color: rgb(255,255,255);';
-    let darkmode_colours = ' color: rgb(0,0,0); background-color: rgb(93,93,93);';
+    const standard_colours = ' color: rgb(0,0,0); background-color: rgb(255,255,255);';
+    const darkmode_colours = ' color: rgb(0,0,0); background-color: rgb(93,93,93);';
     
     let chosen_colours = standard_colours;
-    if (game.options.menu.darkTheme.enabled == 2) {
+    if (game.options.menu.darkTheme.enabled === 2) {
         chosen_colours = darkmode_colours;
     }
-    containerRunetrinketCounter.setAttribute('style', 'display: block; position: absolute; top: 0; right: 0; width: 30%; font-size: 0.7em; text-align: center;' + chosen_colours);
+	containerRunetrinketCounter.id = 'RunetrinketCounter';
+    containerRunetrinketCounter.setAttribute('style', 'display: block; position: absolute; top: 0; right: 0; width: 30%; font-size: 0.58em; text-align: center;' + chosen_colours);
     containerRunetrinketCounter.setAttribute('class', 'noselect');
-    const textareaRunetrinketCounter = document.createElement('SPAN');
     containerRunetrinketCounter.setAttribute('onmouseover', RTC_populateRunetrinketCounterTooltip(true));
     containerRunetrinketCounter.setAttribute('onmouseout', 'tooltip("hide")');
-    textareaRunetrinketCounter.id = 'RunetrinketCounter';
-    containerRunetrinketCounter.appendChild(textareaRunetrinketCounter);
-    let target_area = document.getElementById('wood');
+	const target_area = document.getElementById('wood');
     target_area.insertBefore(containerRunetrinketCounter, target_area.children[0]);
 }
 
@@ -58,12 +55,18 @@ function RTC_getRunetrinketGuaranteedRate() {
 }
 
 function RTC_makeStringForDisplay() {
-    if (game.global.universe == 1) {
-        return '';
-    }
-    
-    const runetrinketstring = RTC_getRunetrinketCountFromGame() + "<br\>/ " + RTC_getRunetrinketMaxFromGame();
-    return runetrinketstring
+	if (game.global.universe !== 2) {
+		return '';
+	}
+
+	const runeTrinkets = game.portal.Observation.trinkets;
+	const runeTrinketsMax = RTC_getRunetrinketMaxFromGame();
+	if (runeTrinkets >= runeTrinketsMax) {
+		return '';
+	}
+
+	const runeTrinketString = `${runeTrinkets}<span style="display: block; border-bottom: 1px solid black; margin: 3px 20%;"></span>${runeTrinketsMax}`;
+	return runeTrinketString;
 }
 
 function RTC_populateRunetrinketCounterTooltip() {
@@ -83,13 +86,14 @@ function RTC_populateRunetrinketCounterTooltip() {
     return tooltipstring
 }
 
-function RTC_populateRunetrinketCounterInfo() {
-    if (usingRealTimeOffline == true) {
-      return '';
-    }
-  
-    const target_element = document.getElementById('RunetrinketCounter');
-    const the_information = RTC_makeStringForDisplay();
-    target_element.innerHTML = the_information;
-    target_element.parentNode.setAttribute('onmouseover', RTC_populateRunetrinketCounterTooltip());
+function RTC_populateRunetrinketCounterInfo() {    
+	if (usingRealTimeOffline || game.portal.Observation.radLocked) {
+		return;
+	}
+
+	const target_element = document.getElementById('RunetrinketCounter');
+	const the_information = RTC_makeStringForDisplay();
+
+	if (target_element.innerHTML !== the_information) target_element.innerHTML = the_information;
+	if (the_information !== '') target_element.setAttribute('onmouseover', RTC_populateRunetrinketCounterTooltip());
 }
