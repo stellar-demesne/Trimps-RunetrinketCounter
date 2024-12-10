@@ -87,11 +87,16 @@ function RTC_populateRunetrinketCounterTooltip() {
 }
 
 function RTC_populateRunetrinketCounterInfo() {    
-	if (usingRealTimeOffline || game.portal.Observation.radLocked) {
+	if (usingRealTimeOffline) {
 		return;
 	}
 
 	const target_element = document.getElementById('RunetrinketCounter');
+
+	if (game.portal.Observation.radLocked || game.global.universe != 2) {
+		target_element.innerHTML = '';
+		return;
+	}
 	const the_information = RTC_makeStringForDisplay();
 
 	if (target_element.innerHTML !== the_information) target_element.innerHTML = the_information;
