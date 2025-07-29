@@ -9,16 +9,14 @@ if (document.getElementById('RunetrinketCounter') === null) {
     if (game.options.menu.darkTheme.enabled === 2) {
         chosen_colours = darkmode_colours;
     }
-	containerRunetrinketCounter.id = 'RunetrinketCounter';
+    containerRunetrinketCounter.id = 'RunetrinketCounter';
     containerRunetrinketCounter.setAttribute('style', 'display: block; position: absolute; top: 0; right: 0; width: 30%; font-size: 0.58em; text-align: center;' + chosen_colours);
     containerRunetrinketCounter.setAttribute('class', 'noselect');
     containerRunetrinketCounter.setAttribute('onmouseover', RTC_populateRunetrinketCounterTooltip(true));
     containerRunetrinketCounter.setAttribute('onmouseout', 'tooltip("hide")');
-	const target_area = document.getElementById('wood');
+    const target_area = document.getElementById('wood');
     target_area.insertBefore(containerRunetrinketCounter, target_area.children[0]);
-}
-
-if (game.portal.Observation.radLocked == false) {
+	
     RTC_populateRunetrinketCounterInfo();
     setInterval( function () {
         RTC_populateRunetrinketCounterInfo();
@@ -59,14 +57,14 @@ function RTC_makeStringForDisplay() {
 		return '';
 	}
 
-	const runeTrinkets = game.portal.Observation.trinkets;
-	const runeTrinketsMax = RTC_getRunetrinketMaxFromGame();
-	if (runeTrinkets >= runeTrinketsMax) {
-		return '';
-	}
+    const runeTrinkets = game.portal.Observation.trinkets;
+    const runeTrinketsMax = RTC_getRunetrinketMaxFromGame();
+    if (runeTrinkets >= runeTrinketsMax) {
+        return '';
+    }
 
-	const runeTrinketString = `${runeTrinkets}<span style="display: block; border-bottom: 1px solid black; margin: 3px 20%;"></span>${runeTrinketsMax}`;
-	return runeTrinketString;
+    const runeTrinketString = `${runeTrinkets}<span style="display: block; border-bottom: 1px solid black; margin: 3px 20%;"></span>${runeTrinketsMax}`;
+    return runeTrinketString;
 }
 
 function RTC_populateRunetrinketCounterTooltip() {
@@ -87,18 +85,18 @@ function RTC_populateRunetrinketCounterTooltip() {
 }
 
 function RTC_populateRunetrinketCounterInfo() {    
-	if (usingRealTimeOffline) {
-		return;
-	}
+    if (usingRealTimeOffline) {
+        return;
+    }
 
-	const target_element = document.getElementById('RunetrinketCounter');
+    const target_element = document.getElementById('RunetrinketCounter');
 
-	if (game.portal.Observation.radLocked || game.global.universe != 2) {
-		target_element.innerHTML = '';
-		return;
-	}
-	const the_information = RTC_makeStringForDisplay();
+    if (game.portal.Observation.radLocked || game.global.universe != 2) {
+        target_element.innerHTML = '';
+        return;
+    }
+    const the_information = RTC_makeStringForDisplay();
 
-	if (target_element.innerHTML !== the_information) target_element.innerHTML = the_information;
-	if (the_information !== '') target_element.setAttribute('onmouseover', RTC_populateRunetrinketCounterTooltip());
+    if (target_element.innerHTML !== the_information) target_element.innerHTML = the_information;
+    if (the_information !== '') target_element.setAttribute('onmouseover', RTC_populateRunetrinketCounterTooltip());
 }
